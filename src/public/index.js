@@ -14,7 +14,7 @@ function init() {
   
   // Socket IO
   let socket;
-  socket = io.connect('http://localhost:3000',{
+  socket = io.connect('https://pf-modelos-de-programacion-ii-production.up.railway.app/',{
     auth: {
       token: localStorage.getItem('token')
     }
