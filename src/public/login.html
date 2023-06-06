@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+    <title>Página de inicio de sesión</title>
+  </head>
+
+  <body style="background: rgb(52,255,0);
+  background: linear-gradient(90deg, rgba(52,255,0,1) 0%, rgba(0,78,255,1) 100%);">
+    <div class="container">
+      <div class="row">
+        <div class="col-3"></div>
+        <div
+          class="col-6"
+          style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 95vh;
+            text-align: center;
+          "
+        >
+          <div
+            class="border border-black boder-1 rounded p-5"
+            style="background-color: rgba(255, 255, 255, 0.7); width: 100%"
+          >
+            <h1>Iniciar sesión</h1>
+            <form id="loginForm">
+              <div>
+                <label for="email" class="form-label">Email:</label>
+                <input
+                  type="email"
+                  class="form-control border-black"
+                  id="email"
+                  name="email"
+                  required
+                />
+              </div>
+              <div>
+                <label for="password" class="form-label border"
+                  >Contraseña:</label
+                >
+                <input
+                  type="password"
+                  class="form-control border-black"
+                  id="password"
+                  name="password"
+                  required
+                />
+              </div>
+              <div>
+                <button type="submit" class="btn btn-dark my-3">
+                  Iniciar sesión
+                </button>
+              </div>
+            </form>
+            <button class="btn btn-dark" id="btn-registro">Registrate ahora!</button>
+          </div>
+        </div>
+        <div class="col-3"></div>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+
+          // Realizar la solicitud POST al endpoint /ingresar
+          fetch("http://localhost:3000/ingresar", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              // Almacenar el token en el almacenamiento local
+              localStorage.setItem("token", data.token);
+
+              // Redireccionar al usuario a otra página o realizar otras acciones
+              window.location.href = "/";
+            })
+            .catch((error) => {
+              console.error("Error al iniciar sesión", error);
+              // Mostrar un mensaje de error al usuario
+              alert(
+                "Error al iniciar sesión. Por favor, inténtalo nuevamente."
+              );
+            });
+        });
+
+
+        // Registro
+        document.getElementById('btn-registro').addEventListener('click', (event) => {
+          window.location.href = "/registro.html"
+        })
+    </script>
+  </body>
+</html>
