@@ -21,15 +21,29 @@ function init() {
   })
 
   socket.on('authSuccess', (data) => {
-    alert('Autenticacion exitosa') // Autenticación exitosa
+    Swal.fire(
+      'Bien hecho!',
+      'Autenticación exitosa!',
+      'success'
+    ) // Autenticación exitosa
   });
   
   socket.on('authFailure', (data) => {
-    alert('Error de autenticacion') // Token de autenticación inválido
+    Swal.fire(
+      'Error!',
+      'Logueate por favor >:c!',
+      'error'
+    )// Token de autenticación inválido
+    window.location.href = '/login.html'
   });
 
+  // Boton de reinicio 
+  document.getElementById('btn').addEventListener('click', (event) => {
+    socket.emit('eliminar')
+    location.reload();
+  })
 
-  // Set the canvas width and height to the browser size
+  // Tamaño total del canvas
   canvas.width = width;
   canvas.height = height;
 

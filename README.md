@@ -1,2 +1,0 @@
-# screenshot
-![](docs/screenshot.png)

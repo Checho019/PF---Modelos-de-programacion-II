@@ -7,7 +7,6 @@ const jwt = require('jsonwebtoken');
 
 // Traer servicio de usuarios
 const usuarios = require('./utils/Usuario');
-const { Socket } = require('dgram');
 
 // iniciar
 const app = express();
@@ -91,29 +90,15 @@ const verificarToken = (req, res, next) => {
 };
 
 // sockets
-io.use((socket, next) => {
-  
-  const token = socket.handshake.query.token;
-  if (!token) {
-    //return next(new Error('Token de autenticación no proporcionado'));
-  }
-
-  console.log('acceso')
-
-  next();
-})
 require('./sockets')(io);
 
-// Ruta protegida para obtener información del usuario
+// Comprobar jwt
 app.get('/user', verificarToken, (req, res) => {
-  // Obtener el nombre de usuario a partir del token decodificado
   const email = req.email;
-  // Realizar cualquier lógica adicional requerida
-  // Devolver la respuesta al cliente
   res.json({ email });
 });
 
-// starting the server
+// Servidor
 server.listen(app.get('port'), () => {
   console.log('Server on port', app.get('port'));
 });

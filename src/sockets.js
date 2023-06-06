@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 
 module.exports = io => {
 
-  // keep track of all lines that client sends
+  // Historial de lineas
   let line_history = [];
 
   io.on('connection', (socket) => {
@@ -12,10 +12,8 @@ module.exports = io => {
     // Verificar el token
     try {
       const decoded = jwt.verify(token, 'frijoles');
-      const email = decoded.email;
-      console.log(email)
 
-      // Emitir un evento personalizado al cliente
+      // Autenticacion realizada
       socket.emit('authSuccess', { message: 'Autenticación exitosa' });
 
       for (let i in line_history) {
@@ -26,6 +24,10 @@ module.exports = io => {
         line_history.push(data.line);
         io.emit('draw_line', { line: data.line });
       });
+
+      socket.on('eliminar', data => {
+        line_history = []
+      })
 
     } catch (error) {
       // Si el token no es válido, manejar el error

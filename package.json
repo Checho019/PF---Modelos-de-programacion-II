@@ -1,7 +1,7 @@
 {
-  "name": "nodejs-drawing-websockets",
+  "name": "proyecto_final_modelos",
   "version": "1.0.0",
-  "description": "![](docs/screenshot.png)",
+  "description": "",
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.20.2",
